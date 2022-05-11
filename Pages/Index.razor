@@ -1,0 +1,63 @@
+﻿@page "/"
+
+<input @bind="@Name">
+
+<h2>Seja bem vindo(a) @Name</h2>
+<h3>Data e hora: @DataEHoraAtual</h3>
+<h3>Dia da semana: @DiaDaSemanaString</h3>
+<h3>Tempo de empresa: @TempoDeEmpresa</h3>
+
+<h3>@DiaString</h3>
+
+@code {
+    private string Name {get; set;} = string.Empty;
+    private static DateTime DataEHoraAtual {get; set;} = DateTime.Now;
+    private static int DiaDaSemana {get; set;} = (int)DataEHoraAtual.DayOfWeek;
+    private string DiaDaSemanaString {get; set;} = string.Empty;
+    private static string TempoDeEmpresa = "10 Meses";
+    private string DiaString {get; set;} = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        FormartarDiaDaSemana();
+        DiaFormatador();
+    }
+
+    public string DiaFormatador() {
+        if (DataEHoraAtual.Hour > 6 && DataEHoraAtual.Hour < 12)
+                DiaString = "Bom dia";
+            else if (DataEHoraAtual.Hour >= 12 && DataEHoraAtual.Hour < 18)
+                DiaString = "Boa tarde";
+            else
+                DiaString = "Boa noite";
+        return DiaString;
+    }
+
+    public string FormartarDiaDaSemana() {
+        switch(DiaDaSemana) {
+            case 1:
+                DiaDaSemanaString = "Segunda";
+                break;
+            case 2:
+                DiaDaSemanaString = "Terça";
+                break;
+            case 3:
+                DiaDaSemanaString = "Quarta";
+                break;
+            case 4:
+                DiaDaSemanaString = "Quinta";
+                break;
+            case 5:
+                DiaDaSemanaString = "Sexta";
+                break;
+            case 6: 
+                DiaDaSemanaString = "Sábado";
+                break;
+            case 7: 
+                DiaDaSemanaString = "Domingo";
+                break;
+        }
+
+        return DiaDaSemanaString;
+    }
+}
